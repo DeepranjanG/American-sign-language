@@ -14,7 +14,7 @@ class_names = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','
 
 vc = cv2.VideoCapture("asl-alphabet.mp4")
 
-net = cv2.dnn.readNet("ASL.weights", "ASL.cfg")
+net = cv2.dnn.readNet("ASL-best.weights", "ASL.cfg")
 
 model = cv2.dnn_DetectionModel(net)
 model.setInputParams(size=(416, 416), scale=1/255, swapRB=True)

@@ -12,7 +12,7 @@ class_names = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','
 
 frame = cv2.imread("images/thermal_2068.jpg")
 
-net = cv2.dnn.readNet("ASL.weights", "ASL.cfg")
+net = cv2.dnn.readNet("ASL-best.weights", "ASL.cfg")
 
 
 model = cv2.dnn_DetectionModel(net)

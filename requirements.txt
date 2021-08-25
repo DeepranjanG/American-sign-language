@@ -8,17 +8,8 @@ cffi @ file:///tmp/build/80754af9/cffi_1600699180754/work
 chardet==3.0.4
 click==7.1.2
 colorama==0.4.4
-cryptography @ file:///tmp/build/80754af9/cryptography_1601046817403/work
-cv-bridge==1.15.0
 cycler==0.10.0
 decorator==4.4.2
-defusedxml==0.6.0
-diagnostic-analysis==1.10.4
-diagnostic-common-diagnostics==1.10.4
-diagnostic-updater==1.10.4
-dynamic-reconfigure==1.7.1
-dynamixel-sdk==3.7.51
-entrypoints==0.3
 Flask==1.1.2
 Flask-Cors==3.0.9
 future==0.18.2
