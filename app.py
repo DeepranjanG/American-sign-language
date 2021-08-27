@@ -1,42 +1,36 @@
-from __future__ import division, print_function
-# coding=utf-8
-import sys
+from flask import Flask, request, render_template
 import os
-import glob
-import re, glob, os,cv2
-
-# Flask utils
-from flask import Flask, redirect, url_for, request, render_template
+from flask_cors import CORS, cross_origin
+from yolov4_image import predict
 from werkzeug.utils import secure_filename
-from gevent.pywsgi import WSGIServer
 
-# Define a flask app
+os.putenv('LANG', 'en_US.UTF-8')
+os.putenv('LC_ALL', 'en_US.UTF-8')
+
 app = Flask(__name__)
+CORS(app)
+UPLOAD_FOLDER = 'static/uploads/'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 
 
-@app.route('/', methods=['GET'])
-def index():
-    # Main page
+@app.route("/", methods=['GET'])
+@cross_origin()
+def home():
     return render_template('index.html')
 
+    
 
-@app.route('/predict', methods=['GET', 'POST'])
-def upload():
-    if request.method == 'POST':
-        # Get the file from post request
-        f = request.files['file']
-
-        # Save the file to ./uploads
-        basepath = os.path.dirname(__file__)
-        file_path = os.path.join(
-            basepath, 'uploads', secure_filename(f.filename))
-        f.save(file_path)
-
-        # Make prediction
-        get_detected_object=detect_object(file_path)
-        return get_detected_object
-    return None
+@app.route("/predict", methods=['POST'])
+@cross_origin()
+def predictRoute():
+    f = request.files['file']
+    filename = secure_filename(f.filename)
+    filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+    f.save(filepath)
+    result = predict(filepath)
+    return render_template("uploaded.html", filepath=filepath)
 
 
-if __name__ == '__main__':
-    app.run(debug=True)
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', port=8080, debug=True)
