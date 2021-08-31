@@ -3,6 +3,7 @@ import os
 from flask_cors import CORS, cross_origin
 from yolov4_image import predict
 from werkzeug.utils import secure_filename
+from wsgiref import simple_server
 
 os.putenv('LANG', 'en_US.UTF-8')
 os.putenv('LC_ALL', 'en_US.UTF-8')
@@ -33,4 +34,7 @@ def predictRoute():
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=8080, debug=True)
+    port = int(os.getenv("PORT"))
+    host = '0.0.0.0'
+    httpd = simple_server.make_server(host=host,port=8080, app=app)
+    httpd.serve_forever()
